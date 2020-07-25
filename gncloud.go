@@ -38,8 +38,7 @@ func (n Nextcloud) getOrDelete(method string, path string, v interface{}) error 
 	}
 
 	var r Response
-	err = ghttp.JSON(req, &r)
-	if err != nil {
+	if err = ghttp.JSON(req, &r); err != nil {
 		return err
 	}
 
@@ -53,8 +52,7 @@ func (n Nextcloud) postOrPut(method string, path string, data url.Values, v inte
 	}
 
 	var r Response
-	err = ghttp.FormJSON(req, data, &r)
-	if err != nil {
+	if err = ghttp.FormJSON(req, data, &r); err != nil {
 		return err
 	}
 
@@ -62,7 +60,7 @@ func (n Nextcloud) postOrPut(method string, path string, data url.Values, v inte
 }
 
 func (n Nextcloud) buildRequest(method string, path string) (*http.Request, error) {
-	req, err := http.NewRequest(method, n.url(path), nil)
+	req, err := ghttp.NewRequest(method, n.url(path))
 	if err != nil {
 		return nil, err
 	}
